@@ -20,7 +20,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let startButton: UIButton
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
     let contentView = UIView()
-    let wordLabel = UILabel()
+
+    var wordLabels = [UILabel]()
 
     var currentBar = 0
     var currentTickInBar = 0
@@ -83,9 +84,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.contentView.isHidden = true
         self.view.addSubview(self.contentView)
 
-        self.wordLabel.backgroundColor = .clear
-        self.wordLabel.textColor = .black
-        self.contentView.addSubview(self.wordLabel)
+        let labelCount = DemoDictionary.words
+            .flatMap { $0 }
+            .max(by: { $1.count > $0.count })!
+            .count
+
+        for _ in 0..<labelCount {
+            let label = UILabel()
+            label.backgroundColor = .clear
+            label.textColor = .black
+            label.isHidden = true
+            self.contentView.insertSubview(label, at: 0)
+            self.wordLabels.append(label)
+        }
+
+        self.wordLabels[0].isHidden = false
 
         self.currentWord = word(index: 0)
 
@@ -125,7 +138,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        self.sceneView.isHidden = true
 
         self.contentView.frame = self.view.bounds
-        self.wordLabel.frame = self.view.bounds
+
+        for label in self.wordLabels {
+            label.frame = self.view.bounds
+        }
 
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
 
@@ -204,7 +220,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             self.currentBar += 1
         }
 
-        self.wordLabel.text = String(self.currentWord.word.prefix(self.currentWordIndex))
+        for label in self.wordLabels {
+            label.text = String(self.currentWord.word.prefix(self.currentWordIndex))
+        }
 
         self.currentWordIndex += 1
 
@@ -219,6 +237,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             }
 
             self.currentWord = word(index: groupIndex)
+
+            for label in self.wordLabels {
+                label.isHidden = true
+            }
+
+            self.wordLabels[0].isHidden = false
         }
     }
 
@@ -277,7 +301,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
         // done!
 
-        self.wordLabel.font = UIFont.systemFont(ofSize: CGFloat(fontSize), weight: .heavy)
+        for label in self.wordLabels {
+            label.font = UIFont.systemFont(ofSize: CGFloat(fontSize), weight: .heavy)
+        }
     }
 
     fileprivate func createScene() -> SCNScene {
