@@ -12,7 +12,7 @@ import SceneKit
 import Foundation
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
-    let autostart = false
+    let autostart = true
     
     let audioPlayer: AVAudioPlayer
 //    let sceneView = SCNView()
