@@ -17,7 +17,6 @@ struct DemoDictionary {
             "Disconet",
             "European",
             "American",
-            "Razormaid",
             "Midnight",
         ],
         [
