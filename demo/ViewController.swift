@@ -20,6 +20,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let startButton: UIButton
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
     let contentView = UIView()
+    let wordLabel = UILabel()
 
     var currentBar = 0
     var currentTickInBar = 0
@@ -80,6 +81,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.contentView.isHidden = true
         self.view.addSubview(self.contentView)
 
+        self.wordLabel.backgroundColor = .clear
+        self.wordLabel.textColor = .black
+        self.contentView.addSubview(self.wordLabel)
+
         if !self.autostart {
             self.view.addSubview(self.startButton)
         }
@@ -116,8 +121,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        self.sceneView.isHidden = true
 
         self.contentView.frame = self.view.bounds
+        self.wordLabel.frame = self.view.bounds
 
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+
+        setWordLabelFont()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -191,6 +199,56 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             self.currentTickInBar = 0
             self.currentBar += 1
         }
+    }
+
+    func setWordLabelFont() {
+        // first pass: figure out which word is the widest
+
+        let firstPassFont = UIFont.systemFont(ofSize: 24, weight: .heavy)
+        let label = UILabel(frame: .zero)
+        label.font = firstPassFont
+
+        var widestWord: (word: String, width: CGFloat)? = nil
+
+        for wordGroup in DemoDictionary.words {
+            for word in wordGroup {
+                label.text = word
+                label.sizeToFit()
+
+                if let wideWord = widestWord {
+                    if label.bounds.size.width > wideWord.width {
+                        widestWord = (word, label.bounds.size.width)
+                    }
+                } else {
+                    widestWord = (word, label.bounds.size.width)
+                }
+            }
+        }
+
+        // second pass: figure out the max width
+
+        var maxSizeFound = false
+        let maxWidth = self.view.bounds.size.width
+        var fontSize = 24
+
+        label.text = widestWord!.word
+
+        while !maxSizeFound {
+            let font = UIFont.systemFont(ofSize: CGFloat(fontSize), weight: .heavy)
+            label.font = font
+            label.sizeToFit()
+
+            if label.bounds.size.width < maxWidth {
+                fontSize += 1
+            } else {
+                fontSize -= 1
+                maxSizeFound = true
+            }
+        }
+
+        // done!
+
+        self.wordLabel.font = UIFont.systemFont(ofSize: CGFloat(fontSize), weight: .heavy)
     }
 
     fileprivate func createScene() -> SCNScene {
