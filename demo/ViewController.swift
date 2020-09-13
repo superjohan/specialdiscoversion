@@ -19,6 +19,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //    let camera = SCNNode()
     let startButton: UIButton
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
+    let contentView = UIView()
+
+    var currentBar = 0
+    var currentTickInBar = 0
 
     // MARK: - UIViewController
     
@@ -72,6 +76,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         
 //        self.view.addSubview(self.sceneView)
 
+        self.contentView.backgroundColor = .yellow
+        self.contentView.isHidden = true
+        self.view.addSubview(self.contentView)
+
         if !self.autostart {
             self.view.addSubview(self.startButton)
         }
@@ -106,6 +114,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        self.sceneView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
 //        self.sceneView.isPlaying = true
 //        self.sceneView.isHidden = true
+
+        self.contentView.frame = self.view.bounds
 
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
     }
@@ -150,20 +160,37 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        self.sceneView.isHidden = false
         
         self.audioPlayer.play()
-        
+
+        self.contentView.isHidden = false
+
         scheduleEvents()
     }
     
     private func scheduleEvents() {
-        let bpm = 140.0
-        let bar = (120.0 / bpm) * 2.0
-        let tick = bar / 16.0
+        let bpm = 120.0
+        let barLength = (120.0 / bpm) * 2.0
+        let tickLength = barLength / 16.0
 
-        perform(#selector(event), with: nil, afterDelay: tick)
+        let bars = 52
+
+        for bar in 0...bars {
+            let barStart = Double(bar) * barLength
+
+            for tick in 0..<16 {
+                let currentTick = barStart + (Double(tick) * tickLength)
+
+                perform(#selector(event), with: nil, afterDelay: currentTick)
+            }
+        }
     }
-    
+
     @objc private func event() {
-        // intentionally left blank
+        self.currentTickInBar += 1
+
+        if self.currentTickInBar >= 16 {
+            self.currentTickInBar = 0
+            self.currentBar += 1
+        }
     }
 
     fileprivate func createScene() -> SCNScene {
