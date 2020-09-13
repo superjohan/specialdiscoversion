@@ -15,7 +15,7 @@ struct DemoDictionary {
             "Super",
             "Original",
             "Disconet",
-            "European",
+            "Euro",
             "American",
             "Midnight",
         ],
