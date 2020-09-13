@@ -15,8 +15,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let autostart = false
     
     let audioPlayer: AVAudioPlayer
-    let sceneView = SCNView()
-    let camera = SCNNode()
+//    let sceneView = SCNView()
+//    let camera = SCNNode()
     let startButton: UIButton
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
 
@@ -40,7 +40,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        camera.colorFringeStrength = 3
 //        camera.bloomIntensity = 1
 //        camera.bloomBlurRadius = 40
-        self.camera.camera = camera // lol
+//        self.camera.camera = camera // lol
         
         let startButtonText =
             "\"special disco version\"\n" +
@@ -62,15 +62,15 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.startButton.addTarget(self, action: #selector(startButtonTouched), for: UIControl.Event.touchUpInside)
         
         self.view.backgroundColor = .black
-        self.sceneView.backgroundColor = .black
-        self.sceneView.delegate = self
+//        self.sceneView.backgroundColor = .black
+//        self.sceneView.delegate = self
         
         self.qtFoolingBgView.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
         
         // barely visible tiny view for fooling Quicktime player. completely black images are ignored by QT
         self.view.addSubview(self.qtFoolingBgView)
         
-        self.view.addSubview(self.sceneView)
+//        self.view.addSubview(self.sceneView)
 
         if !self.autostart {
             self.view.addSubview(self.startButton)
@@ -90,7 +90,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
         self.audioPlayer.prepareToPlay()
         
-        self.sceneView.scene = createScene()
+//        self.sceneView.scene = createScene()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -103,9 +103,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             height: 2
         )
 
-        self.sceneView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
-        self.sceneView.isPlaying = true
-        self.sceneView.isHidden = true
+//        self.sceneView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
+//        self.sceneView.isPlaying = true
+//        self.sceneView.isHidden = true
 
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
     }
@@ -147,7 +147,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     }
     
     fileprivate func start() {
-        self.sceneView.isHidden = false
+//        self.sceneView.isHidden = false
         
         self.audioPlayer.play()
         
@@ -170,9 +170,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         let scene = SCNScene()
         scene.background.contents = UIColor.black
         
-        self.camera.position = SCNVector3Make(0, 0, 58)
-        
-        scene.rootNode.addChildNode(self.camera)
+//        self.camera.position = SCNVector3Make(0, 0, 58)
+//        
+//        scene.rootNode.addChildNode(self.camera)
         
         configureLight(scene)
         
