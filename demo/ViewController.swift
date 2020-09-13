@@ -24,6 +24,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
     var currentBar = 0
     var currentTickInBar = 0
+    var currentWord: (word: String, index: Int) = ("", 0)
+    var currentWordIndex = 1
 
     // MARK: - UIViewController
     
@@ -84,6 +86,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.wordLabel.backgroundColor = .clear
         self.wordLabel.textColor = .black
         self.contentView.addSubview(self.wordLabel)
+
+        self.currentWord = word(index: 0)
 
         if !self.autostart {
             self.view.addSubview(self.startButton)
@@ -199,6 +203,27 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             self.currentTickInBar = 0
             self.currentBar += 1
         }
+
+        self.wordLabel.text = String(self.currentWord.word.prefix(self.currentWordIndex))
+
+        self.currentWordIndex += 1
+
+        if self.currentWordIndex > self.currentWord.word.count {
+            self.currentWordIndex = 0
+
+            let groupIndex: Int
+            if self.currentWord.index == 2 {
+                groupIndex = 0
+            } else {
+                groupIndex = self.currentWord.index + 1
+            }
+
+            self.currentWord = word(index: groupIndex)
+        }
+    }
+
+    func word(index: Int) -> (word: String, index: Int) {
+        return (DemoDictionary.words[index].randomElement()!, index)
     }
 
     func setWordLabelFont() {
