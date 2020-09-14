@@ -199,8 +199,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         let bpm = 120.0
         let barLength = (120.0 / bpm) * 2.0
         let tickLength = barLength / 16.0
-
-        let bars = 52
+        let bars = SoundtrackStructure.length
 
         for bar in 0...bars {
             let barStart = Double(bar) * barLength
@@ -219,6 +218,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         if self.currentTickInBar >= 16 {
             self.currentTickInBar = 0
             self.currentBar += 1
+
+            switch self.currentBar {
+            case SoundtrackStructure.quietHit1,
+                 SoundtrackStructure.quietHit2:
+                print("todo")
+            case SoundtrackStructure.loudHit1,
+                 SoundtrackStructure.loudHit2,
+                 SoundtrackStructure.loudHit3:
+                print("todo")
+            case SoundtrackStructure.end:
+                print("todo")
+                self.contentView.isHidden = true // FIXME
+            default:
+                break
+            }
         }
 
         for label in self.wordLabels {
@@ -330,4 +344,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         omniLightNode.position = SCNVector3Make(0, 0, 60)
         scene.rootNode.addChildNode(omniLightNode)
     }
+}
+
+struct SoundtrackStructure {
+    static let length = 37
+    static let quietHit1 = 26
+    static let quietHit2 = 28
+    static let loudHit1 = 30
+    static let loudHit2 = 32
+    static let loudHit3 = 34
+    static let end = 35
 }
