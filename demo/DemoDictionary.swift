@@ -21,8 +21,8 @@ struct DemoDictionary {
         ],
         [
             "Disco",
-            "12″",
-            "7″",
+            "12-inch",
+            "7-inch",
             "Dance",
             "Album",
             "Single",
