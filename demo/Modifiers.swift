@@ -16,8 +16,6 @@ enum Modifier: Equatable {
     case addXAddY(animated: Bool)
     case addXSubY(animated: Bool)
     case random(animated: Bool)
-    case scaleUp(animated: Bool)
-    case scaleDown(animated: Bool)
     case rotate2d(animated: Bool)
     case rotate3d(animated: Bool)
 }
@@ -37,8 +35,6 @@ func generateModifierList() -> [Modifier] {
         .addXAddY(animated: false),
         .addXSubY(animated: false),
         .random(animated: false),
-        .scaleUp(animated: false),
-        .scaleDown(animated: false),
         .rotate2d(animated: false),
         .rotate3d(animated: false),
         .addX(animated: true),
@@ -47,8 +43,6 @@ func generateModifierList() -> [Modifier] {
         .addXAddY(animated: true),
         .addXSubY(animated: true),
         .random(animated: true),
-        .scaleUp(animated: true),
-        .scaleDown(animated: true),
         .rotate2d(animated: true),
         .rotate3d(animated: true),
     ]
