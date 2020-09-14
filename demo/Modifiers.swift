@@ -27,7 +27,7 @@ func generateModifierList() -> [Modifier] {
         + DemoDictionary.words[1].min(by: { $0.count < $1.count })!.count
         + DemoDictionary.words[2].min(by: { $0.count < $1.count })!.count
         + 2 // "spaces"
-    let length = SoundtrackStructure.length * 16
+    let length = (SoundtrackStructure.length * 16) - SoundtrackStructure.modifierStart
     let sequenceCount = length / shortestSequence
     let allModifiers: [Modifier] = [
         .none,
