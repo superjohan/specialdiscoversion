@@ -262,6 +262,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                         modifier: self.modifiers[self.currentModifierIndex],
                         value: CGFloat.random(in: 10...30)
                     )
+
+                    self.currentModifierIndex += 1
                 }
             } else {
                 groupIndex = self.currentWord.index + 1
