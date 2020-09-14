@@ -240,6 +240,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
             for label in self.wordLabels {
                 label.isHidden = true
+                label.frame = self.view.bounds
+                label.transform = .identity
             }
 
             self.wordLabels[0].isHidden = false
