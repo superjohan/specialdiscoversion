@@ -28,7 +28,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     var currentTickInBar = 0
     var currentWord: (word: String, index: Int) = ("", 0)
     var currentWordIndex = 1
-    var currentModifier: Modifier = .none
+    var currentModifier: (modifier: Modifier, animated: Bool) = (.none, false)
 
     // MARK: - UIViewController
     
