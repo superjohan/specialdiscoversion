@@ -272,6 +272,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         }
     }
 
+    func modifyViews(animated: Bool, block: @escaping () -> ()) {
+        if animated {
+            UIView.animate(withDuration: SoundtrackConfig.tickLength, delay: 0, options: [.curveLinear], animations: block, completion: nil)
+        } else {
+            block()
+        }
+    }
+
     func setWordLabelFont() {
         // first pass: figure out which word is the widest
 
