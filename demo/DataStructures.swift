@@ -47,17 +47,3 @@ struct SoundtrackStructure {
     static let loudHit3 = 34
     static let end = 35
 }
-
-enum Modifier {
-    case none
-    case addX
-    case addY
-    case subY
-    case addXAddY
-    case addXSubY
-    case random
-    case scaleUp
-    case scaleDown
-    case rotate2d
-    case rotate3d
-}
