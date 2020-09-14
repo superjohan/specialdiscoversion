@@ -21,6 +21,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
     let contentView = UIView()
     let yellow = UIColor(red: 247.0 / 255.0, green: 237.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+    let modifiers: [Modifier]
 
     var wordLabels = [UILabel]()
 
@@ -66,7 +67,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.startButton.titleLabel?.numberOfLines = 0
         self.startButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         self.startButton.backgroundColor = UIColor.black
-        
+
+        self.modifiers = generateModifierList()
+
         super.init(nibName: nil, bundle: nil)
         
         self.startButton.addTarget(self, action: #selector(startButtonTouched), for: UIControl.Event.touchUpInside)
