@@ -20,6 +20,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let startButton: UIButton
     let qtFoolingBgView: UIView = UIView.init(frame: CGRect.zero)
     let contentView = UIView()
+    let yellow = UIColor(red: 247.0 / 255.0, green: 237.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
 
     var wordLabels = [UILabel]()
 
@@ -80,7 +81,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         
 //        self.view.addSubview(self.sceneView)
 
-        self.contentView.backgroundColor = .yellow
+        self.contentView.backgroundColor = self.yellow
         self.contentView.isHidden = true
         self.view.addSubview(self.contentView)
 
