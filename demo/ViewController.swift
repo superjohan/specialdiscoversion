@@ -200,16 +200,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     }
     
     private func scheduleEvents() {
-        let bpm = 120.0
-        let barLength = (120.0 / bpm) * 2.0
-        let tickLength = barLength / 16.0
         let bars = SoundtrackStructure.length
 
         for bar in 0...bars {
-            let barStart = Double(bar) * barLength
+            let barStart = Double(bar) * SoundtrackConfig.barLength
 
             for tick in 0..<16 {
-                let currentTick = barStart + (Double(tick) * tickLength)
+                let currentTick = barStart + (Double(tick) * SoundtrackConfig.tickLength)
 
                 perform(#selector(event), with: nil, afterDelay: currentTick)
             }

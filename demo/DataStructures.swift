@@ -48,3 +48,9 @@ struct SoundtrackStructure {
     static let loudHit3 = 34
     static let end = 35
 }
+
+struct SoundtrackConfig {
+    static let bpm = 120.0
+    static let barLength = (120.0 / bpm) * 2.0
+    static let tickLength = barLength / 16.0
+}
