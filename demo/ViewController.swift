@@ -11,6 +11,8 @@ import AVFoundation
 import SceneKit
 import Foundation
 
+typealias CurrentModifier = (modifier: Modifier, value: CGFloat)
+
 class ViewController: UIViewController, SCNSceneRendererDelegate {
     let autostart = true
     
@@ -29,7 +31,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     var currentTickInBar = 0
     var currentWord: (word: String, index: Int) = ("", 0)
     var currentWordIndex = 1
-    var currentModifier: Modifier = .none
+    var currentModifier: CurrentModifier? = nil
+    var currentModifierIndex = 0
 
     // MARK: - UIViewController
     
@@ -99,6 +102,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             label.backgroundColor = .clear
             label.textColor = .black
             label.isHidden = true
+            label.lineBreakMode = .byClipping
             self.contentView.addSubview(label)
             self.wordLabels.append(label)
         }
@@ -240,6 +244,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             label.text = String(self.currentWord.word.prefix(self.currentWordIndex))
         }
 
+        if let modifier = self.currentModifier {
+            applyModifier(modifier, index: self.currentWordIndex, count: self.currentWord.word.count)
+        }
+
         self.currentWordIndex += 1
 
         if self.currentWordIndex > self.currentWord.word.count {
@@ -248,6 +256,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             let groupIndex: Int
             if self.currentWord.index == 2 {
                 groupIndex = 0
+
+                if self.currentBar >= SoundtrackStructure.modifierStart {
+                    self.currentModifier = (
+                        modifier: self.modifiers[self.currentModifierIndex],
+                        value: CGFloat.random(in: 10...30)
+                    )
+                }
             } else {
                 groupIndex = self.currentWord.index + 1
             }
@@ -269,6 +284,70 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             return (DemoDictionary.words[index].randomElement()!, index)
         } else {
             return (DemoDictionary.words[index][0], index)
+        }
+    }
+
+    func applyModifier(_ modifier: CurrentModifier, index: Int, count: Int) {
+        if index < 2 || modifier.modifier == .none {
+            return
+        }
+
+        let correctedIndex = index - 1
+        let label = self.wordLabels[correctedIndex]
+        label.isHidden = false
+        label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
+
+        let mod = Modifier.rotate2d(animated: true)
+
+//        switch modifier.modifier {
+        switch mod {
+        case .none:
+            break
+        case .addX(animated: let animated):
+            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
+            modifyViews(animated: animated, block: {
+                label.frame.origin.x += modifier.value
+            })
+        case .addY(animated: let animated):
+            label.frame.origin.y += modifier.value * CGFloat(correctedIndex - 1)
+            modifyViews(animated: animated, block: {
+                label.frame.origin.y += modifier.value
+            })
+        case .subY(animated: let animated):
+            label.frame.origin.y -= modifier.value * CGFloat(correctedIndex - 1)
+            modifyViews(animated: animated, block: {
+                label.frame.origin.y -= modifier.value
+            })
+        case .addXAddY(animated: let animated):
+            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
+            label.frame.origin.y += modifier.value * CGFloat(correctedIndex - 1)
+            modifyViews(animated: animated, block: {
+                label.frame.origin.x += modifier.value
+                label.frame.origin.y += modifier.value
+            })
+        case .addXSubY(animated: let animated):
+            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
+            label.frame.origin.y -= modifier.value * CGFloat(correctedIndex - 1)
+            modifyViews(animated: animated, block: {
+                label.frame.origin.x += modifier.value
+                label.frame.origin.y -= modifier.value
+            })
+        case .random(animated: let animated):
+            modifyViews(animated: animated, block: {
+                label.frame.origin.x += CGFloat.random(in: modifier.value...modifier.value * 2) * (Bool.random() ? -1 : 1)
+                label.frame.origin.y += CGFloat.random(in: modifier.value...modifier.value * 2) * (Bool.random() ? -1 : 1)
+            })
+        case .rotate2d(animated: let animated):
+            label.transform = CGAffineTransform.identity
+                .translatedBy(x: CGFloat(10 * (correctedIndex - 1)), y: 0)
+                .rotated(by: 0.5 * (CGFloat(correctedIndex - 1) / CGFloat(count)))
+            modifyViews(animated: animated, block: {
+                label.transform = CGAffineTransform.identity
+                    .translatedBy(x: CGFloat(10 * correctedIndex), y: 0)
+                    .rotated(by: 0.5 * (CGFloat(correctedIndex) / CGFloat(count)))
+            })
+        case .rotate3d(animated: let animated):
+            break
         }
     }
 
