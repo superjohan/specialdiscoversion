@@ -297,10 +297,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         label.isHidden = false
         label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
 
-        let mod = Modifier.rotate2d(animated: true)
+//        let mod = Modifier.rotate2d(animated: true)
 
-//        switch modifier.modifier {
-        switch mod {
+        switch modifier.modifier {
+//        switch mod {
         case .none:
             break
         case .addX(animated: let animated):
