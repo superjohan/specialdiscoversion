@@ -346,27 +346,3 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         scene.rootNode.addChildNode(omniLightNode)
     }
 }
-
-struct SoundtrackStructure {
-    static let length = 37
-    static let quietHit1 = 26
-    static let quietHit2 = 28
-    static let loudHit1 = 30
-    static let loudHit2 = 32
-    static let loudHit3 = 34
-    static let end = 35
-}
-
-enum Modifier {
-    case none
-    case addX
-    case addY
-    case subY
-    case addXAddY
-    case addXSubY
-    case random
-    case scaleUp
-    case scaleDown
-    case rotate2d
-    case rotate3d
-}
