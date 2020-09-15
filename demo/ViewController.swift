@@ -247,6 +247,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                     label.isHidden = true
                     positionLabel(label)
                     label.transform = .identity
+                    label.layer.transform = CATransform3DIdentity
                 }
 
                 self.wordLabels[0].isHidden = false
@@ -314,7 +315,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         label.isHidden = false
         label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
 
-//        let mod = Modifier.rotate2d(animated: true)
+//        let mod = Modifier.rotate3d(animated: false)
 
         switch modifier.modifier {
 //        switch mod {
@@ -364,6 +365,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                     .rotated(by: 0.5 * (CGFloat(correctedIndex) / CGFloat(count)))
             })
         case .rotate3d(animated: let animated):
+            label.layer.transform.m34 = -0.002
+            label.layer.transform = CATransform3DRotate(CATransform3DIdentity, (CGFloat(correctedIndex - 1) / CGFloat(count)), 1, 1, 1)
+            modifyViews(animated: animated, block: {
+                label.layer.transform = CATransform3DRotate(label.layer.transform, (CGFloat(correctedIndex) / CGFloat(count)), 1, 1, 1)
+            })
             break
         }
     }
