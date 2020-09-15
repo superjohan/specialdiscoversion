@@ -34,7 +34,7 @@ func generateModifierList() -> [Modifier] {
         .modifyXModifyY,
         .random,
         .rotate2d,
-        .rotate2d,
+        .rotate3d,
     ]
 
     var modifiers = [Modifier]()
