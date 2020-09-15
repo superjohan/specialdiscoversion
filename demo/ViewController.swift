@@ -33,6 +33,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     var currentWordIndex = 1
     var currentModifier: CurrentModifier? = nil
     var currentModifierIndex = 0
+    var modifierStartIndex = -1
 
     // MARK: - UIViewController
     
@@ -257,7 +258,9 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         }
 
         if let modifier = self.currentModifier {
-            applyModifier(modifier, index: self.currentWordIndex, count: self.currentWord.word.count)
+            if self.modifierStartIndex == self.currentWord.index || self.modifierStartIndex > 2 {
+                applyModifier(modifier, index: self.currentWordIndex, count: self.currentWord.word.count)
+            }
         }
 
         self.currentWordIndex += 1
@@ -277,6 +280,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                     )
 
                     self.currentModifierIndex += 1
+                    self.modifierStartIndex += 1
                 }
             } else {
                 groupIndex = self.currentWord.index + 1
