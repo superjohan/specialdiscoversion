@@ -97,12 +97,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             .max(by: { $1.count > $0.count })!
             .count
 
-        for _ in 0..<labelCount {
+        for i in 0..<labelCount {
             let label = UILabel()
             label.backgroundColor = .clear
             label.textColor = .black
             label.isHidden = true
             label.lineBreakMode = .byClipping
+            label.layer.zPosition = CGFloat(-100 + (i * 10))
             self.contentView.addSubview(label)
             self.wordLabels.append(label)
         }
