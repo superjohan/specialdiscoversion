@@ -11,12 +11,12 @@ import UIKit
 
 enum Modifier: Equatable {
     case none
-    case modifyX(animated: Bool)
-    case modifyY(animated: Bool)
-    case modifyXModifyY(animated: Bool)
-    case random(animated: Bool)
-    case rotate2d(animated: Bool)
-    case rotate3d(animated: Bool)
+    case modifyX
+    case modifyY
+    case modifyXModifyY
+    case random
+    case rotate2d
+    case rotate3d
 }
 
 func generateModifierList() -> [Modifier] {
@@ -29,18 +29,12 @@ func generateModifierList() -> [Modifier] {
 
     let allModifiers: [Modifier] = [
         .none,
-        .modifyX(animated: false),
-        .modifyY(animated: false),
-        .modifyXModifyY(animated: false),
-        .random(animated: false),
-        .rotate2d(animated: false),
-        .rotate2d(animated: false),
-        .modifyX(animated: true),
-        .modifyY(animated: true),
-        .modifyXModifyY(animated: true),
-        .random(animated: true),
-        .rotate2d(animated: true),
-        .rotate2d(animated: true),
+        .modifyX,
+        .modifyY,
+        .modifyXModifyY,
+        .random,
+        .rotate2d,
+        .rotate2d,
     ]
 
     var modifiers = [Modifier]()

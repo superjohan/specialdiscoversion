@@ -322,52 +322,24 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        switch mod {
         case .none:
             break
-        case .modifyX(animated: let animated):
-            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex - 1)
-            modifyViews(animated: animated, block: {
-                label.frame.origin.x += modifier.value1
-            })
-        case .modifyY(animated: let animated):
-            label.frame.origin.y += modifier.value1 * CGFloat(correctedIndex - 1)
-            modifyViews(animated: animated, block: {
-                label.frame.origin.y += modifier.value1
-            })
-        case .modifyXModifyY(animated: let animated):
-            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex - 1)
-            label.frame.origin.y += modifier.value2 * CGFloat(correctedIndex - 1)
-            modifyViews(animated: animated, block: {
-                label.frame.origin.x += modifier.value1
-                label.frame.origin.y += modifier.value2
-            })
-        case .random(animated: let animated):
-            modifyViews(animated: animated, block: {
-                label.frame.origin.x += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
-                label.frame.origin.y += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
-            })
-        case .rotate2d(animated: let animated):
+        case .modifyX:
+            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex)
+        case .modifyY:
+            label.frame.origin.y += modifier.value1 * CGFloat(correctedIndex)
+        case .modifyXModifyY:
+            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex)
+            label.frame.origin.y += modifier.value2 * CGFloat(correctedIndex)
+        case .random:
+            label.frame.origin.x += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
+            label.frame.origin.y += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
+        case .rotate2d:
             label.transform = CGAffineTransform.identity
-                .translatedBy(x: CGFloat(10 * (correctedIndex - 1)), y: 0)
-                .rotated(by: 0.5 * (CGFloat(correctedIndex - 1) / CGFloat(count)))
-            modifyViews(animated: animated, block: {
-                label.transform = CGAffineTransform.identity
-                    .translatedBy(x: CGFloat(10 * correctedIndex), y: 0)
-                    .rotated(by: 0.5 * (CGFloat(correctedIndex) / CGFloat(count)))
-            })
-        case .rotate3d(animated: let animated):
+                .translatedBy(x: CGFloat(10 * correctedIndex), y: 0)
+                .rotated(by: 0.5 * (CGFloat(correctedIndex) / CGFloat(count)))
+        case .rotate3d:
             label.layer.transform.m34 = -0.002
-            label.layer.transform = CATransform3DRotate(CATransform3DIdentity, (CGFloat(correctedIndex - 1) / CGFloat(count)), 1, 1, 1)
-            modifyViews(animated: animated, block: {
-                label.layer.transform = CATransform3DRotate(label.layer.transform, (CGFloat(correctedIndex) / CGFloat(count)), 1, 1, 1)
-            })
+            label.layer.transform = CATransform3DRotate(label.layer.transform, (CGFloat(correctedIndex) / CGFloat(count)), 1, 1, 1)
             break
-        }
-    }
-
-    func modifyViews(animated: Bool, block: @escaping () -> ()) {
-        if animated {
-            UIView.animate(withDuration: SoundtrackConfig.tickLength, delay: 0, options: [.curveLinear], animations: block, completion: nil)
-        } else {
-            block()
         }
     }
 
