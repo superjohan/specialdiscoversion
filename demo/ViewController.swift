@@ -148,13 +148,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 
         self.contentView.frame = self.view.bounds
 
-        for label in self.wordLabels {
-            label.frame = self.view.bounds
-        }
-
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
 
         setWordLabelFont()
+
+        for label in self.wordLabels {
+            positionLabel(label)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -241,6 +241,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         }
 
         for label in self.wordLabels {
+            if self.currentWordIndex == 0 {
+                for label in self.wordLabels {
+                    label.isHidden = true
+                    positionLabel(label)
+                    label.transform = .identity
+                }
+
+                self.wordLabels[0].isHidden = false
+            }
+
             label.text = String(self.currentWord.word.prefix(self.currentWordIndex))
         }
 
@@ -270,17 +280,21 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             }
 
             self.currentWord = word(index: groupIndex)
-
-            for label in self.wordLabels {
-                label.isHidden = true
-                label.frame = self.view.bounds
-                label.transform = .identity
-            }
-
-            self.wordLabels[0].isHidden = false
         }
     }
 
+    func positionLabel(_ label: UILabel) {
+        label.text = self.currentWord.word
+        label.sizeToFit()
+        label.frame = CGRect(
+            x: self.view.bounds.midX - (label.bounds.size.width / 2.0),
+            y: self.view.bounds.midY - (label.bounds.size.height / 2.0),
+            width: label.bounds.size.width,
+            height: label.bounds.size.height
+        )
+        label.text = ""
+    }
+    
     func word(index: Int) -> (word: String, index: Int) {
         if self.currentBar < 43 {
             return (DemoDictionary.words[index].randomElement()!, index)
