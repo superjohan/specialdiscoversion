@@ -11,7 +11,7 @@ import AVFoundation
 import SceneKit
 import Foundation
 
-typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloat)
+typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloat, value3: CGFloat)
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
     let autostart = true
@@ -276,7 +276,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                     self.currentModifier = (
                         modifier: self.modifiers[self.currentModifierIndex],
                         value1: randomRange(),
-                        value2: randomRange()
+                        value2: randomRange(),
+                        value3: randomRange()
                     )
 
                     self.currentModifierIndex += 1
@@ -343,8 +344,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                 .translatedBy(x: CGFloat(modifier.value1 * CGFloat(correctedIndex - 1)), y: CGFloat(modifier.value2 * CGFloat(correctedIndex - 1)))
                 .rotated(by: rotation)
         case .rotate3d:
+            let rotation = (CGFloat.pi / 4.0) * (modifier.value1 / modifierRange.upperBound) * (CGFloat(correctedIndex) / CGFloat(count))
+            let x = (modifier.value1 / modifierRange.upperBound) * (CGFloat(correctedIndex) / CGFloat(count))
+            let y = (modifier.value2 / modifierRange.upperBound) * (CGFloat(correctedIndex) / CGFloat(count))
+            let z = (modifier.value3 / modifierRange.upperBound) * (CGFloat(correctedIndex) / CGFloat(count))
+
             label.layer.transform.m34 = -0.002
-            label.layer.transform = CATransform3DRotate(label.layer.transform, (CGFloat(correctedIndex) / CGFloat(count)), 1, 1, 1)
+            label.layer.transform = CATransform3DRotate(label.layer.transform, rotation, x, y, z)
             break
         }
     }
