@@ -321,10 +321,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         label.isHidden = false
         label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
 
-//        let mod = Modifier.modifyXModifyY(animated: false)
-
         switch modifier.modifier {
-//        switch mod {
         case .none:
             break
         case .modifyX:
