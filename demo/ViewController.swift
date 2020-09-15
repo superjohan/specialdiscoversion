@@ -337,9 +337,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             label.frame.origin.x += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
             label.frame.origin.y += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
         case .rotate2d:
+            let rotation = (CGFloat.pi / 4.0) * (((modifier.value1 - modifierRange.lowerBound) / (modifierRange.upperBound - modifierRange.lowerBound)) * (CGFloat(correctedIndex) / CGFloat(count)))
+
             label.transform = CGAffineTransform.identity
-                .translatedBy(x: CGFloat(10 * correctedIndex), y: 0)
-                .rotated(by: 0.5 * (CGFloat(correctedIndex) / CGFloat(count)))
+                .translatedBy(x: CGFloat(modifier.value1 * CGFloat(correctedIndex - 1)), y: CGFloat(modifier.value2 * CGFloat(correctedIndex - 1)))
+                .rotated(by: rotation)
         case .rotate3d:
             label.layer.transform.m34 = -0.002
             label.layer.transform = CATransform3DRotate(label.layer.transform, (CGFloat(correctedIndex) / CGFloat(count)), 1, 1, 1)
