@@ -304,7 +304,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     }
     
     func word(index: Int) -> (word: String, index: Int) {
-        if self.currentBar < 43 {
+        if self.currentBar < SoundtrackStructure.loudHit1 {
             return (DemoDictionary.words[index].randomElement()!, index)
         } else {
             return (DemoDictionary.words[index][0], index)
