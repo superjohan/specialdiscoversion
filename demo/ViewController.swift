@@ -121,7 +121,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.contentView.addSubview(self.labelContainer)
 
         self.foregroundView.isHidden = true
-        self.contentView.addSubview(self.backgroundView)
+        self.contentView.addSubview(self.foregroundView)
 
         self.wordLabels[0].isHidden = false
 
