@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90182869251137CE00B5D4B2 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90182868251137CE00B5D4B2 /* BackgroundView.swift */; };
 		90274E7C250FC90500C3A03B /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90274E7B250FC90500C3A03B /* Modifiers.swift */; };
 		9042B7252056F88C000DB49A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042B7242056F88C000DB49A /* AppDelegate.swift */; };
 		9042B7272056F88C000DB49A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042B7262056F88C000DB49A /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		90182868251137CE00B5D4B2 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		90274E7B250FC90500C3A03B /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		9042B7212056F88C000DB49A /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9042B7242056F88C000DB49A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				9042B7242056F88C000DB49A /* AppDelegate.swift */,
 				9042B7262056F88C000DB49A /* ViewController.swift */,
+				90182868251137CE00B5D4B2 /* BackgroundView.swift */,
 				90644BA3250E576F00E6348B /* specialdiscoversion.m4a */,
 				9042B72B2056F88C000DB49A /* Assets.xcassets */,
 				9042B72D2056F88C000DB49A /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90182869251137CE00B5D4B2 /* BackgroundView.swift in Sources */,
 				9042B7272056F88C000DB49A /* ViewController.swift in Sources */,
 				9042B7252056F88C000DB49A /* AppDelegate.swift in Sources */,
 				90644BA6250E597200E6348B /* DataStructures.swift in Sources */,
