@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let modifierRange = CGFloat(10)...CGFloat(30)
+
 enum Modifier: Equatable {
     case none
     case modifyX
@@ -64,5 +66,5 @@ func generateModifierList() -> [Modifier] {
 }
 
 func randomRange() -> CGFloat {
-    return CGFloat.random(in: 10...30) * CGFloat(Bool.random() ? -1 : 1)
+    return CGFloat.random(in: modifierRange) * CGFloat(Bool.random() ? -1 : 1)
 }
