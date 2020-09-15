@@ -259,6 +259,26 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             default:
                 break
             }
+
+            if self.currentBar >= SoundtrackStructure.backgroundStart && self.currentBar % 2 == 1 {
+                switch Int.random(in: 0...2) {
+                case 0:
+                    self.backgroundView.isHidden = false
+                    self.backgroundView.animate(duration: SoundtrackConfig.barLength)
+                case 1:
+                    self.maskView.isHidden = false
+                    self.labelContainer.mask = self.maskView
+                    self.maskView.animate(duration: SoundtrackConfig.barLength)
+                case 2:
+                    self.foregroundView.isHidden = false
+                    self.foregroundView.animate(duration: SoundtrackConfig.barLength)
+                default: break
+                }
+            } else {
+                self.backgroundView.isHidden = true
+                self.labelContainer.mask = nil
+                self.foregroundView.isHidden = true
+            }
         }
 
         for label in self.wordLabels {

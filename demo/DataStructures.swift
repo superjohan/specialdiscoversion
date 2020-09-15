@@ -41,6 +41,7 @@ struct DemoDictionary {
 struct SoundtrackStructure {
     static let length = 37
     static let modifierStart = 5
+    static let backgroundStart = 9
     static let quietHit1 = 26
     static let quietHit2 = 28
     static let loudHit1 = 30
