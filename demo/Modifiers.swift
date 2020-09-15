@@ -7,14 +7,13 @@
 //
 
 import Foundation
+import UIKit
 
 enum Modifier: Equatable {
     case none
-    case addX(animated: Bool)
-    case addY(animated: Bool)
-    case subY(animated: Bool)
-    case addXAddY(animated: Bool)
-    case addXSubY(animated: Bool)
+    case modifyX(animated: Bool)
+    case modifyY(animated: Bool)
+    case modifyXModifyY(animated: Bool)
     case random(animated: Bool)
     case rotate2d(animated: Bool)
     case rotate3d(animated: Bool)
@@ -27,24 +26,21 @@ func generateModifierList() -> [Modifier] {
         + 2 // "spaces"
     let length = (SoundtrackStructure.length * 16) - SoundtrackStructure.modifierStart
     let sequenceCount = length / shortestSequence
+
     let allModifiers: [Modifier] = [
         .none,
-        .addX(animated: false),
-        .addY(animated: false),
-        .subY(animated: false),
-        .addXAddY(animated: false),
-        .addXSubY(animated: false),
+        .modifyX(animated: false),
+        .modifyY(animated: false),
+        .modifyXModifyY(animated: false),
         .random(animated: false),
         .rotate2d(animated: false),
-        .rotate3d(animated: false),
-        .addX(animated: true),
-        .addY(animated: true),
-        .subY(animated: true),
-        .addXAddY(animated: true),
-        .addXSubY(animated: true),
+        .rotate2d(animated: false),
+        .modifyX(animated: true),
+        .modifyY(animated: true),
+        .modifyXModifyY(animated: true),
         .random(animated: true),
         .rotate2d(animated: true),
-        .rotate3d(animated: true),
+        .rotate2d(animated: true),
     ]
 
     var modifiers = [Modifier]()
@@ -71,4 +67,8 @@ func generateModifierList() -> [Modifier] {
     }
 
     return modifiers
+}
+
+func randomRange() -> CGFloat {
+    return CGFloat.random(in: 10...30) * CGFloat(Bool.random() ? -1 : 1)
 }

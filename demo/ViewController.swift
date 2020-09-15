@@ -11,7 +11,7 @@ import AVFoundation
 import SceneKit
 import Foundation
 
-typealias CurrentModifier = (modifier: Modifier, value: CGFloat)
+typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloat)
 
 class ViewController: UIViewController, SCNSceneRendererDelegate {
     let autostart = true
@@ -272,7 +272,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
                 if self.currentBar >= SoundtrackStructure.modifierStart {
                     self.currentModifier = (
                         modifier: self.modifiers[self.currentModifierIndex],
-                        value: CGFloat.random(in: 10...30)
+                        value1: randomRange(),
+                        value2: randomRange()
                     )
 
                     self.currentModifierIndex += 1
@@ -315,45 +316,33 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         label.isHidden = false
         label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
 
-//        let mod = Modifier.rotate3d(animated: false)
+//        let mod = Modifier.modifyXModifyY(animated: false)
 
         switch modifier.modifier {
 //        switch mod {
         case .none:
             break
-        case .addX(animated: let animated):
-            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
+        case .modifyX(animated: let animated):
+            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex - 1)
             modifyViews(animated: animated, block: {
-                label.frame.origin.x += modifier.value
+                label.frame.origin.x += modifier.value1
             })
-        case .addY(animated: let animated):
-            label.frame.origin.y += modifier.value * CGFloat(correctedIndex - 1)
+        case .modifyY(animated: let animated):
+            label.frame.origin.y += modifier.value1 * CGFloat(correctedIndex - 1)
             modifyViews(animated: animated, block: {
-                label.frame.origin.y += modifier.value
+                label.frame.origin.y += modifier.value1
             })
-        case .subY(animated: let animated):
-            label.frame.origin.y -= modifier.value * CGFloat(correctedIndex - 1)
+        case .modifyXModifyY(animated: let animated):
+            label.frame.origin.x += modifier.value1 * CGFloat(correctedIndex - 1)
+            label.frame.origin.y += modifier.value2 * CGFloat(correctedIndex - 1)
             modifyViews(animated: animated, block: {
-                label.frame.origin.y -= modifier.value
-            })
-        case .addXAddY(animated: let animated):
-            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
-            label.frame.origin.y += modifier.value * CGFloat(correctedIndex - 1)
-            modifyViews(animated: animated, block: {
-                label.frame.origin.x += modifier.value
-                label.frame.origin.y += modifier.value
-            })
-        case .addXSubY(animated: let animated):
-            label.frame.origin.x += modifier.value * CGFloat(correctedIndex - 1)
-            label.frame.origin.y -= modifier.value * CGFloat(correctedIndex - 1)
-            modifyViews(animated: animated, block: {
-                label.frame.origin.x += modifier.value
-                label.frame.origin.y -= modifier.value
+                label.frame.origin.x += modifier.value1
+                label.frame.origin.y += modifier.value2
             })
         case .random(animated: let animated):
             modifyViews(animated: animated, block: {
-                label.frame.origin.x += CGFloat.random(in: modifier.value...modifier.value * 2) * (Bool.random() ? -1 : 1)
-                label.frame.origin.y += CGFloat.random(in: modifier.value...modifier.value * 2) * (Bool.random() ? -1 : 1)
+                label.frame.origin.x += CGFloat.random(in: modifier.value1...modifier.value1 * 2) * (Bool.random() ? -1 : 1)
+                label.frame.origin.y += CGFloat.random(in: modifier.value1...modifier.value1 * 2) * (Bool.random() ? -1 : 1)
             })
         case .rotate2d(animated: let animated):
             label.transform = CGAffineTransform.identity
