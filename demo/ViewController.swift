@@ -341,8 +341,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             })
         case .random(animated: let animated):
             modifyViews(animated: animated, block: {
-                label.frame.origin.x += CGFloat.random(in: modifier.value1...modifier.value1 * 2) * (Bool.random() ? -1 : 1)
-                label.frame.origin.y += CGFloat.random(in: modifier.value1...modifier.value1 * 2) * (Bool.random() ? -1 : 1)
+                label.frame.origin.x += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
+                label.frame.origin.y += CGFloat.random(in: abs(modifier.value1)...abs(modifier.value1) * 2) * (Bool.random() ? -1 : 1)
             })
         case .rotate2d(animated: let animated):
             label.transform = CGAffineTransform.identity
