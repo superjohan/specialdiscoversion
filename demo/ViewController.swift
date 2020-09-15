@@ -24,6 +24,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
     let contentView = UIView()
     let yellow = UIColor(red: 247.0 / 255.0, green: 237.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
     let modifiers: [Modifier]
+    let labelContainer = UIView()
 
     var wordLabels = [UILabel]()
 
@@ -105,10 +106,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
             label.isHidden = true
             label.lineBreakMode = .byClipping
             label.layer.zPosition = CGFloat(-100 + (i * 10))
-            self.contentView.addSubview(label)
+            self.labelContainer.addSubview(label)
             self.wordLabels.append(label)
         }
 
+        self.contentView.addSubview(self.labelContainer)
+        
         self.wordLabels[0].isHidden = false
 
         self.currentWord = word(index: 0)
@@ -149,6 +152,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
 //        self.sceneView.isHidden = true
 
         self.contentView.frame = self.view.bounds
+        self.labelContainer.frame = self.view.bounds
 
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
 
