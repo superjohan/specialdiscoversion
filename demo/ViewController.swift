@@ -98,6 +98,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate {
         self.view.addSubview(self.contentView)
 
         self.backgroundView.isHidden = true
+        self.backgroundView.layer.zPosition = -1000
         self.contentView.addSubview(self.backgroundView)
 
         self.maskView.isHidden = true
