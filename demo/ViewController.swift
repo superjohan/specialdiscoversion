@@ -38,6 +38,7 @@ class ViewController: UIViewController {
     var currentModifier: CurrentModifier? = nil
     var currentModifierIndex = 0
     var modifierStartIndex = -1
+    var wordIndex = [0, 0, 0]
 
     // MARK: - UIViewController
     
@@ -345,7 +346,14 @@ class ViewController: UIViewController {
     
     func word(index: Int) -> (word: String, index: Int) {
         if self.currentBar < SoundtrackStructure.loudHit1 {
-            return (DemoDictionary.words[index].randomElement()!, index)
+            let word = DemoDictionary.words[index][self.wordIndex[index]]
+
+            self.wordIndex[index] += 1
+            if self.wordIndex[index] >= DemoDictionary.words[index].count {
+                self.wordIndex[index] = 0
+            }
+
+            return (word, index)
         } else {
             return (DemoDictionary.words[index][0], index)
         }
