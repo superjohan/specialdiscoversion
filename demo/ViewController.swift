@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     let backgroundView = BackgroundView(frame: .zero)
     let maskView = BackgroundView(frame: .zero)
     let foregroundView = BackgroundView(frame: .zero)
+    let endViews: [EndView]
 
     var wordLabels = [UILabel]()
 
@@ -67,6 +68,12 @@ class ViewController: UIViewController {
         self.startButton.backgroundColor = UIColor.black
 
         self.modifiers = generateModifierList()
+
+        self.endViews = [
+            EndView(frame: .zero),
+            EndView(frame: .zero),
+            EndView(frame: .zero)
+        ]
 
         super.init(nibName: nil, bundle: nil)
         
@@ -110,6 +117,12 @@ class ViewController: UIViewController {
         self.foregroundView.isHidden = true
         self.contentView.addSubview(self.foregroundView)
 
+        for view in self.endViews {
+            view.layer.zPosition = 1000
+            view.isHidden = true
+            self.contentView.addSubview(view)
+        }
+
         self.wordLabels[0].isHidden = false
 
         self.currentWord = word(index: 0)
@@ -152,6 +165,14 @@ class ViewController: UIViewController {
         self.startButton.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height)
 
         setWordLabelFont()
+
+        for view in self.endViews {
+            view.frame = self.view.bounds
+        }
+
+        self.endViews[0].setup(font: self.wordLabels[0].font, text: "Special")
+        self.endViews[1].setup(font: self.wordLabels[0].font, text: "Disco")
+        self.endViews[2].setup(font: self.wordLabels[0].font, text: "Version")
 
         for label in self.wordLabels {
             positionLabel(label)
@@ -219,15 +240,19 @@ class ViewController: UIViewController {
             case SoundtrackStructure.quietHit1,
                  SoundtrackStructure.quietHit2:
                 print("todo")
-            case SoundtrackStructure.loudHit1,
-                 SoundtrackStructure.loudHit2,
-                 SoundtrackStructure.loudHit3:
-                print("todo")
+            case SoundtrackStructure.loudHit1:
+                self.endViews[0].isHidden = false
+            case SoundtrackStructure.loudHit2:
+                 self.endViews[1].isHidden = false
+            case SoundtrackStructure.loudHit3:
+                self.endViews[2].isHidden = false
             case SoundtrackStructure.end:
                 print("todo")
                 self.contentView.isHidden = true // FIXME
             default:
-                break
+                for view in self.endViews {
+                    view.isHidden = true
+                }
             }
 
             if self.currentBar >= SoundtrackStructure.backgroundStart && self.currentBar % 2 == 1 {
@@ -248,6 +273,12 @@ class ViewController: UIViewController {
                 self.backgroundView.isHidden = true
                 self.labelContainer.mask = nil
                 self.foregroundView.isHidden = true
+            }
+        }
+
+        for view in self.endViews {
+            if !view.isHidden {
+                view.showTick(self.currentTickInBar, duration: SoundtrackConfig.tickLength * 4.0)
             }
         }
 
