@@ -35,7 +35,16 @@ class BackgroundView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func animate(duration: TimeInterval) {
+    func animate(configuration: Configuration, duration: TimeInterval) {
+        switch configuration {
+        case .vertical:
+            vertical(duration: duration)
+        case .horizontal:
+            horizontal(duration: duration)
+        }
+    }
+
+    private func vertical(duration: TimeInterval) {
         let width = self.bounds.size.width / CGFloat(self.viewCount)
 
         for (i, view) in self.views.enumerated() {
@@ -52,5 +61,29 @@ class BackgroundView: UIView {
                 view.frame.origin.x += CGFloat.random(in: -100...100)
             }
         }, completion: nil)
+    }
+
+    private func horizontal(duration: TimeInterval) {
+        let height = self.bounds.size.height / CGFloat(self.viewCount)
+
+        for (i, view) in self.views.enumerated() {
+            view.frame = CGRect(
+                x: 0,
+                y: height * CGFloat(i),
+                width: self.bounds.size.width,
+                height: height
+            )
+        }
+
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveLinear], animations: {
+            for view in self.views {
+                view.frame.origin.y += CGFloat.random(in: -100...100)
+            }
+        }, completion: nil)
+    }
+
+    enum Configuration {
+        case vertical
+        case horizontal
     }
 }
