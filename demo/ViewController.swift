@@ -275,9 +275,6 @@ class ViewController: UIViewController {
             self.currentBar += 1
 
             switch self.currentBar {
-            case SoundtrackStructure.quietHit1,
-                 SoundtrackStructure.quietHit2:
-                print("todo")
             case SoundtrackStructure.loudHit1:
                 self.endViews[0].isHidden = false
             case SoundtrackStructure.loudHit2:
@@ -285,8 +282,7 @@ class ViewController: UIViewController {
             case SoundtrackStructure.loudHit3:
                 self.endViews[2].isHidden = false
             case SoundtrackStructure.end:
-                print("todo")
-                self.contentView.isHidden = true // FIXME
+                self.contentView.isHidden = true
             default:
                 for view in self.endViews {
                     view.isHidden = true
