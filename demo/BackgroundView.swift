@@ -41,6 +41,7 @@ class BackgroundView: UIView {
     func animate(configuration: Configuration, duration: TimeInterval) {
         self.transform = .identity
         self.layer.removeAllAnimations()
+        self.viewContainer.layer.removeAllAnimations()
         self.frame = self.superview!.bounds
         self.viewContainer.frame = self.superview!.bounds
 
