@@ -14,10 +14,10 @@ struct DemoDictionary {
             "Special",
             "Super",
             "Original",
-            "Disconet",
             "Euro",
             "American",
             "Midnight",
+            "Disconet",
         ],
         [
             "Disco",
@@ -34,6 +34,7 @@ struct DemoDictionary {
             "Mix",
             "Edit",
             "Remix",
+            "Dub"
         ]
     ]
 }
