@@ -15,7 +15,7 @@ typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloa
 typealias Background = (config: BackgroundView.Configuration, view: Int)
 
 class ViewController: UIViewController {
-    let autostart = true
+    let autostart = false
     
     let audioPlayer: AVAudioPlayer
 
