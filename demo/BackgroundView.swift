@@ -36,16 +36,28 @@ class BackgroundView: UIView {
     }
 
     func animate(configuration: Configuration, duration: TimeInterval) {
+        self.transform = .identity
+        self.layer.removeAllAnimations()
+
         switch configuration {
-        case .vertical:
-            vertical(duration: duration)
-        case .horizontal:
-            horizontal(duration: duration)
+        case .verticalRandom:
+            verticalRandom(duration: duration)
+        case .verticalLinear:
+            verticalLinear(duration: duration)
+        case .horizontalRandom:
+            horizontalRandom(duration: duration)
+        case .horizontalLinear:
+            horizontalLinear(duration: duration)
+        case .angledRandom:
+            angledRandom(duration: duration)
+        case .angledLinear:
+            break
         }
     }
 
-    private func vertical(duration: TimeInterval) {
+    private func verticalRandom(duration: TimeInterval) {
         let width = self.bounds.size.width / CGFloat(self.viewCount)
+        let colorConfig = randomColorConfig()
 
         for (i, view) in self.views.enumerated() {
             view.frame = CGRect(
@@ -54,6 +66,7 @@ class BackgroundView: UIView {
                 width: width,
                 height: self.bounds.size.height
             )
+            view.backgroundColor = color(colorConfig)
         }
 
         UIView.animate(withDuration: duration, delay: 0, options: [.curveLinear], animations: {
@@ -63,8 +76,31 @@ class BackgroundView: UIView {
         }, completion: nil)
     }
 
-    private func horizontal(duration: TimeInterval) {
+    private func verticalLinear(duration: TimeInterval) {
+        let width = (self.bounds.size.width / CGFloat(self.viewCount)) / 2.0
+
+        for (i, view) in self.views.enumerated() {
+            view.frame = CGRect(
+                x: (width * CGFloat(i)) * 2.0,
+                y: 0,
+                width: width,
+                height: self.bounds.size.height
+            )
+            view.backgroundColor = color(.gray)
+        }
+
+        let animation = CABasicAnimation(keyPath: "position.x")
+        animation.fromValue = NSNumber(floatLiteral: Double(self.bounds.size.width / 2.0) - (Double(width) * 2.0))
+        animation.toValue = NSNumber(floatLiteral: Double(self.bounds.size.width / 2.0))
+        animation.duration = duration / 4.0
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = Float.infinity
+        self.layer.add(animation, forKey: "xposition")
+    }
+
+    private func horizontalRandom(duration: TimeInterval) {
         let height = self.bounds.size.height / CGFloat(self.viewCount)
+        let colorConfig = randomColorConfig()
 
         for (i, view) in self.views.enumerated() {
             view.frame = CGRect(
@@ -73,6 +109,7 @@ class BackgroundView: UIView {
                 width: self.bounds.size.width,
                 height: height
             )
+            view.backgroundColor = color(colorConfig)
         }
 
         UIView.animate(withDuration: duration, delay: 0, options: [.curveLinear], animations: {
@@ -82,8 +119,68 @@ class BackgroundView: UIView {
         }, completion: nil)
     }
 
+    private func horizontalLinear(duration: TimeInterval) {
+        let height = (self.bounds.size.height / CGFloat(self.viewCount)) / 2.0
+
+        for (i, view) in self.views.enumerated() {
+            view.frame = CGRect(
+                x: 0,
+                y: (height * CGFloat(i)) * 2.0,
+                width: self.bounds.size.width,
+                height: height
+            )
+            view.backgroundColor = color(.gray)
+        }
+
+        let animation = CABasicAnimation(keyPath: "position.y")
+        animation.fromValue = NSNumber(floatLiteral: Double(self.bounds.size.height / 2.0) - (Double(height) * 2.0))
+        animation.toValue = NSNumber(floatLiteral: Double(self.bounds.size.height / 2.0))
+        animation.duration = duration / 4.0
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.repeatCount = Float.infinity
+        self.layer.add(animation, forKey: "yposition")
+    }
+
+    private func angledRandom(duration: TimeInterval) {
+
+    }
+
+    private func randomColorConfig() -> Color {
+        switch Int.random(in: 0...2) {
+        case 0:
+            return .white
+        case 1:
+            return .gray
+        case 2:
+            return .random
+        default:
+            abort()
+        }
+    }
+
+    private func color(_ color: Color) -> UIColor {
+        switch color {
+        case .white:
+            return .white
+        case .gray:
+            return .darkGray
+        case .random:
+            return Bool.random() ? .white : .darkGray
+        }
+    }
+
     enum Configuration {
-        case vertical
-        case horizontal
+        case verticalRandom
+        case verticalLinear
+        case horizontalRandom
+        case horizontalLinear
+        case angledRandom
+        case angledLinear
+    }
+
+    enum Color {
+        case white
+        case gray
+        case random
     }
 }
