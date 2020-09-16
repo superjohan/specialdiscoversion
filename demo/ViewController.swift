@@ -260,14 +260,14 @@ class ViewController: UIViewController {
                 switch Int.random(in: 0...2) {
                 case 0:
                     self.backgroundView.isHidden = false
-                    self.backgroundView.animate(configuration: .vertical, duration: SoundtrackConfig.barLength)
+                    self.backgroundView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
                 case 1:
                     self.maskView.isHidden = false
                     self.labelContainer.mask = self.maskView
-                    self.maskView.animate(configuration: .vertical, duration: SoundtrackConfig.barLength)
+                    self.maskView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
                 case 2:
                     self.foregroundView.isHidden = false
-                    self.foregroundView.animate(configuration: .vertical, duration: SoundtrackConfig.barLength)
+                    self.foregroundView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
                 default: break
                 }
             } else {
