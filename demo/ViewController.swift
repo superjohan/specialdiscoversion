@@ -12,6 +12,7 @@ import SceneKit
 import Foundation
 
 typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloat, value3: CGFloat)
+typealias Background = (config: BackgroundView.Configuration, view: Int)
 
 class ViewController: UIViewController {
     let autostart = true
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
     let maskView = BackgroundView(frame: .zero)
     let foregroundView = BackgroundView(frame: .zero)
     let endViews: [EndView]
+    let backgrounds: [Background]
 
     var wordLabels = [UILabel]()
 
@@ -39,6 +41,7 @@ class ViewController: UIViewController {
     var currentModifierIndex = 0
     var modifierStartIndex = -1
     var wordIndex = [0, 0, 0]
+    var backgroundIndex = 0
 
     // MARK: - UIViewController
     
@@ -75,6 +78,40 @@ class ViewController: UIViewController {
             EndView(frame: .zero),
             EndView(frame: .zero)
         ]
+
+        var backgrounds = [Background]()
+
+        let backgroundOrder: [BackgroundView.Configuration] = [
+            .verticalRandom,
+            .verticalLinear,
+            .horizontalRandom,
+            .horizontalLinear,
+            .angledRandom,
+            .angledLinear
+        ].shuffled()
+        var backgroundOrderIndex = 0
+
+        let backgroundViewOrder = [0, 1, 2].shuffled()
+        var backgroundViewOrderIndex = 0
+
+        for _ in 0...30 {
+            backgrounds.append((
+                    config: backgroundOrder[backgroundOrderIndex],
+                    view: backgroundViewOrder[backgroundViewOrderIndex]
+            ))
+
+            backgroundOrderIndex += 1
+            if backgroundOrderIndex >= backgroundOrder.count {
+                backgroundOrderIndex = 0
+            }
+
+            backgroundViewOrderIndex += 1
+            if backgroundViewOrderIndex >= backgroundViewOrder.count {
+                backgroundViewOrderIndex = 0
+            }
+        }
+
+        self.backgrounds = backgrounds
 
         super.init(nibName: nil, bundle: nil)
         
@@ -257,19 +294,23 @@ class ViewController: UIViewController {
             }
 
             if self.currentBar >= SoundtrackStructure.backgroundStart && self.currentBar % 2 == 1 {
-                switch Int.random(in: 0...2) {
+                let backgroundConfig = self.backgrounds[self.backgroundIndex]
+
+                switch backgroundConfig.view {
                 case 0:
                     self.backgroundView.isHidden = false
-                    self.backgroundView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
+                    self.backgroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
                 case 1:
                     self.maskView.isHidden = false
                     self.labelContainer.mask = self.maskView
-                    self.maskView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
+                    self.maskView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
                 case 2:
                     self.foregroundView.isHidden = false
-                    self.foregroundView.animate(configuration: .verticalRandom, duration: SoundtrackConfig.barLength)
+                    self.foregroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
                 default: break
                 }
+
+                self.backgroundIndex += 1
             } else {
                 self.backgroundView.isHidden = true
                 self.labelContainer.mask = nil
