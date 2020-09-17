@@ -100,8 +100,8 @@ class ViewController: UIViewController {
 
         for _ in 0...30 {
             backgrounds.append((
-                    config: backgroundOrder[backgroundOrderIndex],
-                    position: backgroundViewOrder[backgroundViewOrderIndex]
+                config: backgroundOrder[backgroundOrderIndex],
+                position: backgroundViewOrder[backgroundViewOrderIndex]
             ))
 
             backgroundOrderIndex += 1
