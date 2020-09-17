@@ -91,7 +91,11 @@ class ViewController: UIViewController {
         ].shuffled()
         var backgroundOrderIndex = 0
 
-        let backgroundViewOrder: [BackgroundView.Position] = [.back, .mask, .fore].shuffled()
+        let backgroundViewOrder: [BackgroundView.Position] = [
+            .back,
+            .mask,
+            .fore,
+        ].shuffled()
         var backgroundViewOrderIndex = 0
 
         for _ in 0...30 {
