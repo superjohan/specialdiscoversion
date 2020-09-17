@@ -416,7 +416,7 @@ class ViewController: UIViewController {
         let correctedIndex = index - 1
         let label = self.wordLabels[correctedIndex]
         label.isHidden = false
-        label.textColor = UIColor(white: CGFloat(correctedIndex - 1) / CGFloat(count), alpha: 1.0)
+        label.textColor = UIColor(white: CGFloat(correctedIndex) / CGFloat(count), alpha: 1.0)
 
         switch modifier.modifier {
         case .none:
