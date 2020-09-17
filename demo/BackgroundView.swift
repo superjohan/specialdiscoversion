@@ -38,7 +38,7 @@ class BackgroundView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func animate(configuration: Configuration, duration: TimeInterval, position: Position) {
+    func animate(configuration: Configuration, duration: TimeInterval) {
         self.transform = .identity
         self.layer.removeAllAnimations()
         self.viewContainer.layer.removeAllAnimations()

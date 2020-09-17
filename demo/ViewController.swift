@@ -299,14 +299,23 @@ class ViewController: UIViewController {
                 switch backgroundConfig.position {
                 case .back:
                     self.backgroundView.isHidden = false
-                    self.backgroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
+                    self.backgroundView.animate(
+                        configuration: backgroundConfig.config,
+                        duration: SoundtrackConfig.barLength
+                    )
                 case .mask:
                     self.maskView.isHidden = false
                     self.labelContainer.mask = self.maskView
-                    self.maskView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
+                    self.maskView.animate(
+                        configuration: backgroundConfig.config,
+                        duration: SoundtrackConfig.barLength
+                    )
                 case .fore:
                     self.foregroundView.isHidden = false
-                    self.foregroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
+                    self.foregroundView.animate(
+                        configuration: backgroundConfig.config,
+                        duration: SoundtrackConfig.barLength
+                    )
                 }
 
                 self.backgroundIndex += 1
