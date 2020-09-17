@@ -12,7 +12,7 @@ import SceneKit
 import Foundation
 
 typealias CurrentModifier = (modifier: Modifier, value1: CGFloat, value2: CGFloat, value3: CGFloat)
-typealias Background = (config: BackgroundView.Configuration, view: Int)
+typealias Background = (config: BackgroundView.Configuration, position: BackgroundView.Position)
 
 class ViewController: UIViewController {
     let autostart = false
@@ -91,13 +91,13 @@ class ViewController: UIViewController {
         ].shuffled()
         var backgroundOrderIndex = 0
 
-        let backgroundViewOrder = [0, 1, 2].shuffled()
+        let backgroundViewOrder: [BackgroundView.Position] = [.back, .mask, .fore].shuffled()
         var backgroundViewOrderIndex = 0
 
         for _ in 0...30 {
             backgrounds.append((
                     config: backgroundOrder[backgroundOrderIndex],
-                    view: backgroundViewOrder[backgroundViewOrderIndex]
+                    position: backgroundViewOrder[backgroundViewOrderIndex]
             ))
 
             backgroundOrderIndex += 1
@@ -292,18 +292,17 @@ class ViewController: UIViewController {
             if self.currentBar >= SoundtrackStructure.backgroundStart && self.currentBar % 2 == 1 {
                 let backgroundConfig = self.backgrounds[self.backgroundIndex]
 
-                switch backgroundConfig.view {
-                case 0:
+                switch backgroundConfig.position {
+                case .back:
                     self.backgroundView.isHidden = false
-                    self.backgroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
-                case 1:
+                    self.backgroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
+                case .mask:
                     self.maskView.isHidden = false
                     self.labelContainer.mask = self.maskView
-                    self.maskView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
-                case 2:
+                    self.maskView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
+                case .fore:
                     self.foregroundView.isHidden = false
-                    self.foregroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength)
-                default: break
+                    self.foregroundView.animate(configuration: backgroundConfig.config, duration: SoundtrackConfig.barLength, position: backgroundConfig.position)
                 }
 
                 self.backgroundIndex += 1

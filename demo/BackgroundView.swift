@@ -38,7 +38,7 @@ class BackgroundView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func animate(configuration: Configuration, duration: TimeInterval) {
+    func animate(configuration: Configuration, duration: TimeInterval, position: Position) {
         self.transform = .identity
         self.layer.removeAllAnimations()
         self.viewContainer.layer.removeAllAnimations()
@@ -257,5 +257,11 @@ class BackgroundView: UIView {
         case white
         case gray
         case random
+    }
+
+    enum Position {
+        case back
+        case mask
+        case fore
     }
 }
