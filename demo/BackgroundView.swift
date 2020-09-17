@@ -63,7 +63,7 @@ class BackgroundView: UIView {
 
     private func verticalRandom(duration: TimeInterval) {
         let width = (self.bounds.size.width / CGFloat(self.viewCount)) / 2.0
-        let colorConfig = randomColorConfig()
+        let colorConfig = Bool.random() ? Color.random : Color.white
 
         for (i, view) in self.views.enumerated() {
             view.frame = CGRect(
