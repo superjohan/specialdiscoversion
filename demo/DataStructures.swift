@@ -49,6 +49,7 @@ struct SoundtrackStructure {
     static let loudHit2 = 32
     static let loudHit3 = 34
     static let end = 35
+    static let endActual = 36
 }
 
 struct SoundtrackConfig {

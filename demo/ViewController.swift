@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     let foregroundView = BackgroundView(frame: .zero)
     let endViews: [EndView]
     let backgrounds: [Background]
+    let endLabel = UILabel()
 
     var wordLabels = [UILabel]()
 
@@ -156,6 +157,14 @@ class ViewController: UIViewController {
 
         self.contentView.addSubview(self.labelContainer)
 
+        self.endLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        self.endLabel.backgroundColor = .clear
+        self.endLabel.isHidden = true
+        self.endLabel.text = "jML! 2020"
+        self.endLabel.textColor = .white
+        self.endLabel.sizeToFit()
+        self.view.addSubview(self.endLabel)
+
         self.foregroundView.isHidden = true
         self.contentView.addSubview(self.foregroundView)
 
@@ -219,6 +228,13 @@ class ViewController: UIViewController {
         for label in self.wordLabels {
             positionLabel(label)
         }
+
+        self.endLabel.frame = CGRect(
+            x: self.view.bounds.midX - (self.endLabel.bounds.size.width / 2.0),
+            y: self.view.bounds.midY - (self.endLabel.bounds.size.height / 2.0),
+            width: self.endLabel.bounds.size.width,
+            height: self.endLabel.bounds.size.height
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -287,6 +303,9 @@ class ViewController: UIViewController {
                 self.endViews[2].isHidden = false
             case SoundtrackStructure.end:
                 self.contentView.isHidden = true
+                self.endLabel.isHidden = false
+            case SoundtrackStructure.endActual:
+                self.endLabel.isHidden = true
             default:
                 for view in self.endViews {
                     view.isHidden = true
