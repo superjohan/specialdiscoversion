@@ -92,7 +92,7 @@ class BackgroundView: UIView {
                 width: width,
                 height: self.bounds.size.height
             )
-            view.backgroundColor = color(.gray)
+            view.backgroundColor = color(.black)
         }
 
         let animation = CABasicAnimation(keyPath: "position.x")
@@ -135,7 +135,7 @@ class BackgroundView: UIView {
                 width: self.bounds.size.width,
                 height: height
             )
-            view.backgroundColor = color(.gray)
+            view.backgroundColor = color(.black)
         }
 
         let animation = CABasicAnimation(keyPath: "position.y")
@@ -208,7 +208,7 @@ class BackgroundView: UIView {
                 width: self.bounds.size.width,
                 height: height
             )
-            view.backgroundColor = color(.gray)
+            view.backgroundColor = color(.black)
         }
 
         let animation = CABasicAnimation(keyPath: "position.y")
@@ -225,7 +225,7 @@ class BackgroundView: UIView {
         case 0:
             return .white
         case 1:
-            return .gray
+            return .black
         case 2:
             return .random
         default:
@@ -237,10 +237,10 @@ class BackgroundView: UIView {
         switch color {
         case .white:
             return .white
-        case .gray:
-            return .darkGray
+        case .black:
+            return .black
         case .random:
-            return Bool.random() ? .white : .darkGray
+            return Bool.random() ? .white : .black
         }
     }
 
@@ -255,7 +255,7 @@ class BackgroundView: UIView {
 
     enum Color {
         case white
-        case gray
+        case black
         case random
     }
 
